@@ -6,7 +6,7 @@ public class LoginDAO implements OperacoesDAO <Empresa, String, String>{
     @Override
         //TODO: Implementar a lógica de login com JSON - Criar uma branch nova para implementação
     public boolean create(Empresa creating) {
-        //deve criar um usuário com um Objeto do tipo Empresa e adicionar no arquivo JSON utilizado
+        //deve adicionar um Objeto do tipo pessoa no arquivo JSON utilizado
         return false;
     }
 
