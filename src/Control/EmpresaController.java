@@ -5,6 +5,9 @@ import Model.Empresa;
 import Model.EXEPTIONS.InvalidFormatException;
 import Model.ENUMS.*;
 
+import java.util.Iterator;
+import java.util.List;
+
 /***
  * This class receives the calls from the user. It's purpose is to validate the entrys and call Empresa's constructor
  */
@@ -17,7 +20,10 @@ public final class EmpresaController{
         validateCNPJ(empresa.getCNPJ());
         String validatedName = validateName(empresa.getName());
         EmpresaDAO empDAO = new EmpresaDAO();
-        empDAO.create(empresa);
+        List<Empresa> empresas = empDAO.searchAll();
+        if(!empresas.contains(empresa)){
+            empDAO.create(empresa);
+        }
         return empresa;
     }
 

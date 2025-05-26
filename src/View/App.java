@@ -9,7 +9,7 @@ public class App {
         boolean entradaValidada = false;
         //while (!entradaValidada){
         try{
-            Empresa emp = Empresa.create("12.345.789/0001-01", "Nome", Empresa.Status.ACTIVE);
+            Empresa emp = Empresa.create("12.345.789/0001-02", "Nome", Empresa.Status.ACTIVE);
             System.out.println(emp);
             entradaValidada = true;
         } catch (InvalidFormatException e) {
