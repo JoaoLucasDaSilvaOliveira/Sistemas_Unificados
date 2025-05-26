@@ -12,7 +12,7 @@ import java.util.List;
 /***
  * This class receives the calls from the user. It's purpose is to validate the entrys and call Empresa's constructor
  */
-public final class EmpresaController{
+public abstract class EmpresaController{
     //estamos propagando o InvalidFormatException para, idealmente, a main ou onde será feita a entrada de dados a fim de
     //colocar essa resolução em um bloco while e resolver a exception
 
