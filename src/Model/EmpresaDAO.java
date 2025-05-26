@@ -2,7 +2,7 @@ package Model;
 
 import java.util.*;
 
-public class LoginDAO implements OperacoesDAO <Empresa, String, String>{
+public class EmpresaDAO implements OperacoesDAO <Empresa, String, String>{
     @Override
         //TODO: Implementar a lógica de login com JSON - Criar uma branch nova para implementação
     public boolean create(Empresa creating) {

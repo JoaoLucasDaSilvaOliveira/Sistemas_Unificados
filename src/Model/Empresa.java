@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.Locale;
+import Control.EmpresaController;
 
 public class Empresa {
     //não usaremos o construtor padrão para inicialização e sim um métod-o estático para isso
