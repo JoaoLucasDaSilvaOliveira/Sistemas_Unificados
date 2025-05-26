@@ -3,6 +3,8 @@ package Model;
 import Control.EmpresaController;
 import Model.EXEPTIONS.InvalidFormatException;
 
+import java.util.Objects;
+
 public class Empresa {
     //não usaremos o construtor padrão para inicialização e sim um métod-o estático para isso
     private Empresa (String CNPJ, String name, Status status){
@@ -54,6 +56,17 @@ public class Empresa {
 
     public static int getCurrentID() {
         return currentID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Empresa empresa)) return false;
+        return ID == empresa.ID && Objects.equals(CNPJ, empresa.CNPJ) && Objects.equals(name, empresa.name) && status == empresa.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(CNPJ, ID, name, status);
     }
 
     @Override
