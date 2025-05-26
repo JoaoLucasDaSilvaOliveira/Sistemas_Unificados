@@ -14,6 +14,7 @@ public class App {
             entradaValidada = true;
         } catch (InvalidFormatException e) {
             System.out.println(e.getMessage());
+            //aqui
         }
         //} //HABILITAR APENAS COM ENTRADAS DO USUÁRIO
     }
