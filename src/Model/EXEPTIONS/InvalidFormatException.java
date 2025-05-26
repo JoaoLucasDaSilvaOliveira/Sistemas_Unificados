@@ -1,4 +1,6 @@
-package Model;
+package Model.EXEPTIONS;
+
+import Model.ENUMS.ValidsFormats;
 
 public class InvalidFormatException extends Exception {
 
