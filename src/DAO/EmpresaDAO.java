@@ -12,6 +12,7 @@ public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
         return false;
     }
 
+    //balela
     @Override
     public List<Empresa> searchAll(Empresa searching) {
         //deve retornar uma lista com todas as empresas do arqv JSON
