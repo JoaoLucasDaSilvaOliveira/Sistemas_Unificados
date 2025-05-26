@@ -1,5 +1,6 @@
 package Control;
 
+import DAO.EmpresaDAO;
 import Model.Empresa;
 import Model.EXEPTIONS.InvalidFormatException;
 import Model.ENUMS.*;
