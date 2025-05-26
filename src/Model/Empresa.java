@@ -1,6 +1,7 @@
 package Model;
 
 import Control.EmpresaController;
+import Model.EXEPTIONS.InvalidFormatException;
 
 public class Empresa {
     //não usaremos o construtor padrão para inicialização e sim um métod-o estático para isso
@@ -11,9 +12,9 @@ public class Empresa {
         setStatus(status);
     }
 
-    public static Empresa create (String CNPJ, String name, Status status){
+    public static Empresa create (String CNPJ, String name, Status status) throws InvalidFormatException {
         //TODO: fazer as verificações aqui e lançar os erros se necessário
-        return new Empresa(CNPJ, name, status);
+        return EmpresaController.validateEntrys(new Empresa(CNPJ, name, status));
     }
 
     private final String CNPJ;
@@ -53,5 +54,15 @@ public class Empresa {
 
     public static int getCurrentID() {
         return currentID;
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" +
+                "CNPJ='" + CNPJ + '\'' +
+                ", ID=" + ID +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

@@ -9,7 +9,7 @@ public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
         //TODO: Implementar a lógica de login com JSON - Criar uma branch nova para implementação
     public boolean create(Empresa creating) {
         //deve adicionar um Objeto do tipo pessoa no arquivo JSON utilizado
-        return false;
+        return true;
     }
 
     @Override
