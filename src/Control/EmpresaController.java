@@ -1,12 +1,8 @@
 package Control;
 
-import DAO.EmpresaDAO;
 import Model.Empresa;
 import Model.EXEPTIONS.InvalidFormatException;
 import Model.ENUMS.*;
-
-import java.util.Iterator;
-import java.util.List;
 
 /***
  * This class receives the calls from the user. It's purpose is to validate the entrys and call Empresa's constructor
