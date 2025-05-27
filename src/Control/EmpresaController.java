@@ -1,6 +1,7 @@
 package Control;
 
 import DAO.EmpresaDAO;
+import Model.EXEPTIONS.ExistingInstance;
 import Model.Empresa;
 import Model.EXEPTIONS.InvalidFormatException;
 import Model.ENUMS.*;
@@ -11,19 +12,20 @@ import java.util.List;
 /***
  * This class receives the calls from the user. It's purpose is to validate the entrys and call Empresa's constructor
  */
-public final class EmpresaController{
+public abstract  class EmpresaController{
     //estamos propagando o InvalidFormatException para, idealmente, a main ou onde será feita a entrada de dados a fim de
     //colocar essa resolução em um bloco while e resolver a exception
 
-    public static Empresa validateEntrys (Empresa empresa) throws InvalidFormatException{
-        if(empresa.getCNPJ() == null || empresa.getName() == null || empresa.getStatus() == null) throw new NullPointerException("Não pode ter argumentos nulos como: CNPJ, Nome e/ou Status");
+    public static Empresa validateEntrys (Empresa empresa) throws InvalidFormatException, ExistingInstance{
+        if( empresa.getCNPJ() == null || empresa.getName() == null || empresa.getStatus() == null) throw new NullPointerException("Não pode ter argumentos nulos como: CNPJ, Nome e/ou Status");
         validateCNPJ(empresa.getCNPJ());
         String validatedName = validateName(empresa.getName());
         EmpresaDAO empDAO = new EmpresaDAO();
         List<Empresa> empresas = empDAO.searchAll();
-        if(!empresas.contains(empresa)){
-            empDAO.create(empresa);
+        if(empresas.contains(empresa)){
+            throw new ExistingInstance("Já existe um objeto com esses atributos!");
         }
+        empDAO.create(empresa);
         return empresa;
     }
 

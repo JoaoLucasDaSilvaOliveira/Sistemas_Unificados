@@ -1,1 +1,18 @@
+<<<<<<< HEAD
 [{"CNPJ":"12.345.789/0001-02","ID":1,"name":"Bentinho","status":"ACTIVE"},{"CNPJ":"12.345.789/0001-02","ID":1,"name":"Bentinhos House","status":"ACTIVE"}]
+=======
+[
+  {
+    "CNPJ": "11.111.111/0001-11",
+    "ID": 1,
+    "name": "Testando",
+    "status": "ACTIVE"
+  },
+  {
+    "CNPJ": "11.111.111/0001-10",
+    "ID": 2,
+    "name": "Testando",
+    "status": "ACTIVE"
+  }
+]
+>>>>>>> main
