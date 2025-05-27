@@ -12,11 +12,16 @@ import java.util.List;
 /***
  * This class receives the calls from the user. It's purpose is to validate the entrys and call Empresa's constructor
  */
-public abstract class EmpresaController{
+public abstract class EmpresaController implements OperacoesController<Empresa>{
     //estamos propagando o InvalidFormatException para, idealmente, a main ou onde será feita a entrada de dados a fim de
     //colocar essa resolução em um bloco while e resolver a exception
 
     public  Empresa validateEntrys (Empresa empresa) throws InvalidFormatException, ExistingInstance{
+        return validate(empresa);
+    }
+
+    @Override
+    public Empresa validate(Empresa empresa) throws InvalidFormatException, ExistingInstance {
         if( empresa.getCNPJ() == null || empresa.getName() == null || empresa.getStatus() == null) throw new NullPointerException("Não pode ter argumentos nulos como: CNPJ, Nome e/ou Status");
         validateCNPJ(empresa.getCNPJ());
         String validatedName = validateName(empresa.getName());
@@ -28,8 +33,6 @@ public abstract class EmpresaController{
         empDAO.create(empresa);
         return empresa;
     }
-
-    public static void
 
     private static void validateCNPJ(String CNPJ)throws InvalidFormatException {
         if (!CNPJ.matches("\\d{2}[.\\s]?\\d{3}[.\\s]?\\d{3}/\\d{4}-\\d{2}")) throw new InvalidFormatException(CNPJ, ValidsFormats.CNPJ);
