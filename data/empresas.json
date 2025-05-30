@@ -10,5 +10,11 @@
     "ID": 2,
     "name": "Testando",
     "status": "ACTIVE"
+  },
+  {
+    "CNPJ": "11.111.711/0001-10",
+    "ID": 3,
+    "name": "Testando",
+    "status": "ACTIVE"
   }
 ]

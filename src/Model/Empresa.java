@@ -33,7 +33,8 @@ public class Empresa {
 
     public static Empresa create (String CNPJ, String name, Status status) throws InvalidFormatException, ExistingInstance {
         //TODO: fazer as verificações aqui e lançar os erros se necessário
-        return EmpresaController.validateEntrys(new Empresa (CNPJ, name, status));
+        EmpresaController control = new EmpresaController();
+        return control.validate(new Empresa(CNPJ, name, status));
     }
 
     private final String CNPJ;
