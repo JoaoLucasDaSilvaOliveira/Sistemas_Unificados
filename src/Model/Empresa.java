@@ -42,6 +42,15 @@ public class Empresa {
     private String name;
     private Status status;
     private static int currentID;
+    private int codDono;
+
+    public int getCodDono() {
+        return codDono;
+    }
+
+    public void setCodDono(int codDono) {
+        this.codDono = codDono;
+    }
 
     public enum Status {
         ACTIVE,

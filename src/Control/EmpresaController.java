@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /***
- * This class receives the calls from the user. It's purpose is to validateAndCreate the entrys and call Empresa's constructor
+ * This class receives the calls from the user. It's purpose is to validate the entrys
  */
 public class EmpresaController implements OperacoesController<Empresa>{
     //estamos propagando o InvalidFormatException para, idealmente, a main ou onde será feita a entrada de dados a fim de

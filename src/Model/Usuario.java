@@ -1,10 +1,15 @@
 package Model;
 
+import Control.EmpresaController;
+import Control.UsuarioController;
 import DAO.UsuarioDAO;
+import Model.EXEPTIONS.ExistingInstance;
+import Model.EXEPTIONS.InvalidFormatException;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Usuario {
 
@@ -22,13 +27,18 @@ public class Usuario {
     }
 
     //não usaremos o construtor padrão para inicialização e sim um métod-o estático para isso
-
-
-    private Usuario(String name, String email, String senha) {
+    private Usuario(String name, String email, String senha, Empresa e) {
         this.name = name;
         this.email = email;
         this.senha = senha;
         ID = ++currentID;
+        includeEmpresa(e);
+    }
+
+    public static Usuario create (String name, String email, String password, Empresa e) throws InvalidFormatException, ExistingInstance {
+        //TODO: fazer as verificações aqui e lançar os erros se necessário
+        UsuarioController control = new UsuarioController();
+        return control.validateAndCreate(new Usuario(name, email, password, e));
     }
 
     private final int ID;
@@ -41,6 +51,7 @@ public class Usuario {
 
     public void includeEmpresa (Empresa e){
         if (e == null) throw new NullPointerException("Empresa não pode ser nula!");
+        e.setCodDono(this.ID);
         // a chave é o id da empresa e o value é a empresa de fato!
         empresas.put(e.getID(), e);
     }
@@ -73,7 +84,40 @@ public class Usuario {
         return ID;
     }
 
-    public void redefinirSenha (String email){
+    public boolean redefinirSenha (String email, String newPassoword){
+        if (email == null) throw new NullPointerException("O email não pode ser nulo amigo!");
+        UsuarioDAO u = new UsuarioDAO();
+        List<Usuario> searching = u.searchAll();
+        for (Usuario us : searching){
+            if (us.getEmail().matches(email)){
+                us.setSenha(newPassoword);
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean redefinirEmail (String name, String password, String newEmail){
+        if (name == null || password == null) throw new NullPointerException("O email e a senha não podem ser nulos amigo!");
+        UsuarioDAO u = new UsuarioDAO();
+        List<Usuario> searching = u.searchAll();
+        for (Usuario us : searching){
+            if (us.getEmail().matches(name) && us.getSenha().matches(password)){
+                us.setEmail(newEmail);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Usuario usuario)) return false;
+        return ID == usuario.ID || (Objects.equals(name, usuario.name) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && Objects.equals(empresas, usuario.empresas));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID, name, email, senha, empresas);
     }
 }
