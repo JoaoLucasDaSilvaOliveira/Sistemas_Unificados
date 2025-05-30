@@ -10,14 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 
 /***
- * This class receives the calls from the user. It's purpose is to validate the entrys and call Empresa's constructor
+ * This class receives the calls from the user. It's purpose is to validateAndCreate the entrys and call Empresa's constructor
  */
 public class EmpresaController implements OperacoesController<Empresa>{
     //estamos propagando o InvalidFormatException para, idealmente, a main ou onde será feita a entrada de dados a fim de
     //colocar essa resolução em um bloco while e resolver a exception
 
     @Override
-    public Empresa validate(Empresa empresa) throws InvalidFormatException, ExistingInstance {
+    public Empresa validateAndCreate(Empresa empresa) throws InvalidFormatException, ExistingInstance {
         if( empresa.getCNPJ() == null || empresa.getName() == null || empresa.getStatus() == null) throw new NullPointerException("Não pode ter argumentos nulos como: CNPJ, Nome e/ou Status");
         validateCNPJ(empresa.getCNPJ());
         String validatedName = validateName(empresa.getName());
