@@ -5,41 +5,53 @@ import DAO.EmpresaDAO;
 import Model.EXEPTIONS.ExistingInstance;
 import Model.EXEPTIONS.InvalidFormatException;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 public class Empresa {
 
-    static{
+    static {
         EmpresaDAO e = new EmpresaDAO();
         List<Empresa> empresas = e.searchAll();
-        if (empresas.isEmpty()){
+        if (empresas.isEmpty()) {
             Empresa.currentID = 0;
         } else {
-            for (Empresa temp : empresas){
+            for (Empresa temp : empresas) {
                 Empresa.currentID = temp.getID();
             }
         }
     }
 
-    //não usaremos o construtor padrão para inicialização e sim um métod-o estático para isso
-    private Empresa (String CNPJ, String name, Status status){
+    // Construtor com anotações para o Jackson
+    @JsonCreator
+    private Empresa(
+            @JsonProperty("cnpj") String CNPJ, // O JSON contém "cnpj", que será mapeado para o campo "CNPJ"
+            @JsonProperty("name") String name,
+            @JsonProperty("status") Status status) {
         this.CNPJ = CNPJ;
         setName(name);
         setStatus(status);
-        ID = ++currentID;
+        this.ID = ++currentID;
     }
 
     public static Empresa create (String CNPJ, String name, Status status) throws InvalidFormatException, ExistingInstance {
         //TODO: fazer as verificações aqui e lançar os erros se necessário
         EmpresaController control = new EmpresaController();
         return control.validateAndCreate(new Empresa(CNPJ, name, status));
+
     }
 
+    @JsonProperty("cnpj") // Mapeia para "cnpj" no JSON
     private final String CNPJ;
+    @JsonProperty("ID") // Mapeia para "ID" no JSON
     private final int ID;
+    @JsonProperty("name") // Mapeia para "name" no JSON
     private String name;
+    @JsonProperty("status") // Mapeia para "status" no JSON
     private Status status;
     private static int currentID;
     private int codDono;
@@ -57,31 +69,36 @@ public class Empresa {
         INACTIVE
     }
 
-    private int IdGenerate (Empresa empresa){
+    private int IdGenerate(Empresa empresa) {
         EmpresaDAO empDAO = new EmpresaDAO();
         List<Empresa> empresas = empDAO.searchAll();
         Iterator<Empresa> iter = empresas.iterator();
-        if(!empresas.contains(empresa)){
-            if (!empresas.isEmpty()){
-                int id=0;
-                while (iter.hasNext()){
+        if (!empresas.contains(empresa)) {
+            if (!empresas.isEmpty()) {
+                int id = 0;
+                while (iter.hasNext()) {
                     Empresa temp = iter.next();
                     id = temp.getID();
                 }
-                return id+1;
+                return id + 1;
             }
         }
         return 1;
     }
 
+    // Getters
+
+    @JsonProperty("cnpj") // Indica que este getter está relacionado ao campo "cnpj" no JSON
     public String getCNPJ() {
         return CNPJ;
     }
 
+    @JsonProperty("ID") // Indica que este getter está relacionado ao campo "ID" no JSON
     public int getID() {
         return ID;
     }
 
+    @JsonProperty("name") // Indica que este getter está relacionado ao campo "name" no JSON
     public String getName() {
         return name;
     }
@@ -90,6 +107,7 @@ public class Empresa {
         this.name = name;
     }
 
+    @JsonProperty("status") // Indica que este getter está relacionado ao campo "status" no JSON
     public Status getStatus() {
         return status;
     }
@@ -98,15 +116,12 @@ public class Empresa {
         this.status = status;
     }
 
-    public int ID() {
-        return ID;
-    }
-
+    // Equals e hashCode
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Empresa empresa)) return false;
-        if ((Objects.equals(CNPJ, empresa.CNPJ) && Objects.equals(name, empresa.name) && status == empresa.status) || ID == empresa.ID){
+        if ((Objects.equals(CNPJ, empresa.CNPJ) && Objects.equals(name, empresa.name) && status == empresa.status) || ID == empresa.ID) {
             return true;
         }
         return false;
