@@ -1,1 +1,17 @@
-[{"name":"kaua","email":"kauafoda@gmail.com","senha":"0000","empresas":{"1":{"cnpj":"01.739.876/0001-76","name":"Sonhos House","status":"ACTIVE","codDono":1,"ID":1}},"id":1}]
+[
+  {
+    "name": "kaua",
+    "email": "kauafoda@gmail.com",
+    "senha": "0000",
+    "empresas": {
+      "1": {
+        "cnpj": "01.739.876/0001-76",
+        "name": "Sonhos House",
+        "status": "ACTIVE",
+        "codDono": 1,
+        "ID": 1
+      }
+    },
+    "id": 1
+  }
+]

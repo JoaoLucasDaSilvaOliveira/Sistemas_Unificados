@@ -1,6 +1,5 @@
 package DAO;
 
-import Model.Empresa;
 import Model.Usuario;
 import Utils.FileUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -86,11 +85,24 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
 
     @Override
     public boolean delete(Usuario deleting) {
-        return false;
+        List<Usuario> usuarios = searchAll();
+        usuarios.remove(deleting);
+
+        return saveList(usuarios);
     }
 
     @Override
     public boolean update(Usuario updating) {
+        List<Usuario> usuarios = searchAll();
+
+        for (Usuario u : usuarios) {
+            if (u.getID() == updating.getID()) {
+                u.setName(updating.getName());
+                u.setSenha(updating.getSenha());
+                u.setEmail(updating.getEmail());
+                return saveList(usuarios);
+            }
+        }
         return false;
     }
 
