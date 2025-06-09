@@ -49,6 +49,7 @@ public class Usuario {
         this.senha = senha;
         ID = ++currentID;
         includeEmpresa(e);
+        EmpresaController.putOwnerId(this.ID, e);
     }
 
     public static Usuario create (String name, String email, String password, Empresa e) throws InvalidFormatException, ExistingInstance {

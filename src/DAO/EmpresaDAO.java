@@ -51,7 +51,6 @@ public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
         if (FileUtils.fileNotFound(PATH)) {
             return new ArrayList<>();
         }
-
         try {
             if (FileUtils.fileIsEmpty(PATH)) { // <-- Verifica se o arquivo está vazio
                 return new ArrayList<>();

@@ -38,4 +38,9 @@ public class EmpresaController implements OperacoesController<Empresa>{
         if (name.isBlank() || name.matches("^[0-9]+$")) throw new InvalidFormatException(name, ValidsFormats.ENTERPRISE_NAME);
         return name.replaceAll("[,\\-_.]", " ");
     }
+    public static void putOwnerId (int id, Empresa obj){
+        obj.setCodDono(id);
+        EmpresaDAO empDao = new EmpresaDAO();
+        empDao.update(obj);
+    }
 }
