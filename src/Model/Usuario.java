@@ -5,6 +5,8 @@ import Control.UsuarioController;
 import DAO.UsuarioDAO;
 import Model.EXEPTIONS.ExistingInstance;
 import Model.EXEPTIONS.InvalidFormatException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,6 +28,20 @@ public class Usuario {
         }
     }
 
+    // Construtor com anotações para o Jackson
+    @JsonCreator
+    private Usuario(
+            @JsonProperty("name") String name, // O JSON contém "cnpj", que será mapeado para o campo "CNPJ"
+            @JsonProperty("email") String email,
+            @JsonProperty("senha") String senha,
+            @JsonProperty("empresas") Map<Integer, Empresa> empresas) {
+        this.name = name;
+        this.senha = senha;
+        this.email = email;
+        this.senha = senha;
+        this.ID = ++currentID;
+    }
+
     //não usaremos o construtor padrão para inicialização e sim um métod-o estático para isso
     private Usuario(String name, String email, String senha, Empresa e) {
         this.name = name;
@@ -41,11 +57,16 @@ public class Usuario {
         return control.validateAndCreate(new Usuario(name, email, password, e));
     }
 
+    @JsonProperty("id")
     private final int ID;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("email")
     private String email;
+    @JsonProperty("senha")
     private String senha;
     //<codEmpresa, objEmpresa>
+    @JsonProperty("empresas")
     private Map<Integer, Empresa> empresas = new LinkedHashMap<>();
     private static int currentID;
 

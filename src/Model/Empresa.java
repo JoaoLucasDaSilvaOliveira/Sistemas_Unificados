@@ -33,6 +33,7 @@ public class Empresa {
             @JsonProperty("name") String name,
             @JsonProperty("status") Status status) {
         this.CNPJ = CNPJ;
+        this.codDono = codDono;
         setName(name);
         setStatus(status);
         this.ID = ++currentID;
@@ -115,7 +116,6 @@ public class Empresa {
     public void setStatus(Status status) {
         this.status = status;
     }
-
     // Equals e hashCode
 
     @Override

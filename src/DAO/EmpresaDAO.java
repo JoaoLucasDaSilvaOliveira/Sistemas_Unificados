@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Empresa;
+import Utils.FileUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -47,13 +48,12 @@ public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
 
     @Override
     public List<Empresa> searchAll() {
-        if (!Files.exists(PATH)) {
-            System.out.println("Arquivo não encontrado. Retornando lista vazia.");
+        if (FileUtils.fileNotFound(PATH)) {
             return new ArrayList<>();
         }
 
         try {
-            if (Files.size(PATH) == 0) { // <-- Verifica se o arquivo está vazio
+            if (FileUtils.fileIsEmpty(PATH)) { // <-- Verifica se o arquivo está vazio
                 return new ArrayList<>();
             }
         } catch (IOException e) {
