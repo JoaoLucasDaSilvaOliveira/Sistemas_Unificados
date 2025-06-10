@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
 
@@ -75,12 +76,22 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
 
     @Override
     public Usuario searchByKey(Integer searching) {
-        return null;
+        // Recupera a lista de todos os usuários
+        List<Usuario> usuarios = searchAll();
+
+        // Procura o usuário cujo ID corresponda à chave fornecida
+        return usuarios.stream()
+                .filter(usuario -> Objects.equals(usuario.getID(), searching))
+                .findFirst()
+                .orElse(null); // Retorna null caso nenhum usuário seja encontrado
     }
+
 
     @Override
     public Usuario searchByValue(String searching) {
-        return null;
+        List<Usuario> usuarios = searchAll();
+
+        return usuarios.stream().filter(e -> e.getName().equalsIgnoreCase(searching)).findFirst().orElse(null);
     }
 
     @Override

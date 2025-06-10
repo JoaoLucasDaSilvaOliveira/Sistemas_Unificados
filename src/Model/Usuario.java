@@ -133,6 +133,17 @@ public class Usuario {
     }
 
     @Override
+    public String toString() {
+        return "Usuario{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", empresas=" + empresas +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof Usuario usuario)) return false;
         return ID == usuario.ID || (Objects.equals(name, usuario.name) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && Objects.equals(empresas, usuario.empresas));
