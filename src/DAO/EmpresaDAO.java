@@ -98,6 +98,7 @@ public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
         for (Empresa e : empresas) {
             if (e.getCNPJ().equals(updating.getCNPJ())) {
                 e.setName(updating.getName());
+                e.setCodDono(updating.getCodDono());
                 return saveList(empresas);
             }
         }
