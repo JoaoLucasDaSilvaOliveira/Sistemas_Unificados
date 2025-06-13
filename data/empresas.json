@@ -1,16 +1,1 @@
-[
-  {
-    "cnpj": "01.739.876/0001-76",
-    "name": "Sonhos House",
-    "status": "ACTIVE",
-    "codDono": 1,
-    "ID": 1
-  },
-  {
-    "cnpj": "02.739.876/0001-76",
-    "name": "Bentos House",
-    "status": "ACTIVE",
-    "codDono": 2,
-    "ID": 2
-  }
-]
+[{"cnpj":"02.739.876/0001-76","name":"Bentos House","status":"ACTIVE","codDono":1,"ID":1},{"cnpj":"03.739.876/0001-76","name":"Mentos House","status":"ACTIVE","codDono":0,"ID":2}]

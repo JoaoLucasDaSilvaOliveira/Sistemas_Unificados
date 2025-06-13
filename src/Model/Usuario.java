@@ -78,6 +78,14 @@ public class Usuario {
         empresas.put(e.getID(), e);
     }
 
+    public Map<Integer, Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(Map<Integer, Empresa> empresas) {
+        this.empresas = empresas;
+    }
+
     public String getName() {
         return name;
     }

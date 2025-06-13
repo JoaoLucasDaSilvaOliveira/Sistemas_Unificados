@@ -111,6 +111,7 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
                 u.setName(updating.getName());
                 u.setSenha(updating.getSenha());
                 u.setEmail(updating.getEmail());
+                u.setEmpresas(updating.getEmpresas());
                 return saveList(usuarios);
             }
         }
