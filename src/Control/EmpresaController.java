@@ -1,12 +1,12 @@
 package Control;
 
 import DAO.EmpresaDAO;
+import DAO.OperacoesDAO;
 import Model.EXEPTIONS.ExistingInstance;
 import Model.Empresa;
 import Model.EXEPTIONS.InvalidFormatException;
 import Model.ENUMS.*;
 
-import java.util.Iterator;
 import java.util.List;
 
 /***
