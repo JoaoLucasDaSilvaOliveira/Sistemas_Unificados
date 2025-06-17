@@ -8,5 +8,5 @@ import java.time.YearMonth;
 import java.util.UUID;
 
 public interface OperacoesGuias<T>{
-    public T create (YearMonth competenciaDesejada) throws Exception;
+    public T create (YearMonth competenciaDesejada, GuiaTypes tipo) throws Exception;
 }

@@ -7,6 +7,7 @@ import Model.ENUMS.LinkPagamento;
 import java.time.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class Guia {
@@ -41,4 +42,52 @@ public abstract class Guia {
         return identificador;
     }
 
+    public String getCNPJ_Empresa() {
+        return CNPJ_Empresa;
+    }
+
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public YearMonth getCompetencia() {
+        return competencia;
+    }
+
+    public LinkPagamento getLink() {
+        return link;
+    }
+
+    public GuiaTypes getTipo() {
+        return tipo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Guia guia)) return false;
+        return Id == guia.Id && Double.compare(valorTotal, guia.valorTotal) == 0 && Objects.equals(CNPJ_Empresa, guia.CNPJ_Empresa) && Objects.equals(identificador, guia.identificador) && Objects.equals(dataVencimento, guia.dataVencimento) && Objects.equals(competencia, guia.competencia) && link == guia.link && tipo == guia.tipo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, tipo);
+    }
+
+    @Override
+    public String toString() {
+        return "Guia{" +
+                "Id=" + Id +
+                ", CNPJ_Empresa='" + CNPJ_Empresa + '\'' +
+                ", identificador=" + identificador +
+                ", dataVencimento=" + dataVencimento +
+                ", valorTotal=" + valorTotal +
+                ", competencia=" + competencia +
+                ", link=" + link +
+                ", tipo=" + tipo +
+                '}';
+    }
 }
