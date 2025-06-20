@@ -66,6 +66,8 @@ public abstract class Guia {
         return tipo;
     }
 
+    public abstract void complementInfos
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Guia guia)) return false;

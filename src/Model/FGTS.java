@@ -1,5 +1,7 @@
 package Model;
 
+import DAO.GuiaDAO;
+
 import java.time.YearMonth;
 import java.util.*;
 
@@ -36,7 +38,7 @@ public class FGTS extends Guia{
         }
     }
 
-    public static FGTS createGuide (YearMonth competencia){
+    public static FGTS generateGuide (YearMonth competencia){
 
     }
     //TODO:
@@ -44,13 +46,13 @@ public class FGTS extends Guia{
      throw Exception para tratar depois
     */
     //Nome, Valores
-    private final Map<String, Double> valoresPorFuncionario;
+    private  Map<String, Double> valoresPorFuncionario;
 
-    //Nome, CPF
-    private final Map<String, String> funcionariosDaGuia;
+    //CPF, Nome
+    private  Map<String, String> funcionariosDaGuia;
 
     //CPF, Valor da guia
-    private final Map<String, Double> eConsignado;
+    private  Map<String, Double> eConsignado;
 
     private static UUID UUIDTemp;
 
