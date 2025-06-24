@@ -9,4 +9,14 @@ public class GuiaDAO implements OperacoesDAO{
         YearMonth competenciaFodase = LocalDate.parse(OutraDataQveioDoJson, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     */
     //a criação de objeto vai ter q ser aqui, chama o new Guia() aqui;
+    //na hora de fazer a criação vai ter que verificar qual o tipo da guia, infelizmente!
+    //IDEIA: switch (tipo) {
+    //            case "FGTS":
+    //                guia = new ...();
+    //                break;
+    //            case "INSS":
+    //                guia = new ...();
+    //                break;
+    //            ...
+    //        }
 }
