@@ -4,6 +4,8 @@ import Control.GuiaController;
 import DAO.GuiaDAO;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -12,7 +14,19 @@ import java.util.*;
 public class FGTS extends Guia{
 
     //não usar normalmente!!! uso apenas da classe DAO
-    public FGTS(int id, String CNPJ_Empresa, UUID identificador, LocalDate dataVencimento, double valorTotal, YearMonth competencia, LinkPagamento link, GuiaTypes type, Map<String, Double> eConsignado, Map<String, String> funcionariosDaGuia, Map<String, Double> valoresPorFuncionario) {
+    @JsonCreator
+    public FGTS(
+               @JsonProperty("id") int id,
+               @JsonProperty("cnpj_empresa") String CNPJ_Empresa,
+               @JsonProperty("identificador") UUID identificador,
+               @JsonProperty("datavencimento") LocalDate dataVencimento,
+               @JsonProperty("valortotal") double valorTotal,
+               @JsonProperty("competencia") YearMonth competencia,
+               @JsonProperty("link") LinkPagamento link,
+               @JsonProperty("type") GuiaTypes type,
+               @JsonProperty("econsignado") Map<String, Double> eConsignado,
+               @JsonProperty("funcionariosdaguia") Map<String, String> funcionariosDaGuia,
+               @JsonProperty("valoresporfuncionario") Map<String, Double> valoresPorFuncionario) {
         super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type);
         this.eConsignado = eConsignado;
         this.funcionariosDaGuia = funcionariosDaGuia;
@@ -28,11 +42,14 @@ public class FGTS extends Guia{
      throw Exception para tratar depois
     */
     //Nome, Valores
+    @JsonProperty("valoresporfuncionario")
     private final Map<String, Double> valoresPorFuncionario;
 
     //CPF, Nome
+    @JsonProperty("funcionariosdaguia")
     private final Map<String, String> funcionariosDaGuia;
 
     //CPF, Valor da guia
+    @JsonProperty("econsignado")
     private final Map<String, Double> eConsignado;
 }

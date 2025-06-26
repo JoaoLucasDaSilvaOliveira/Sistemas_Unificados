@@ -1,8 +1,11 @@
 package Model;
 
-import DAO.EmpresaDAO;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.time.*;
 import java.util.Date;
@@ -10,11 +13,30 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,      // Usa o nome da subclasse
+        include = JsonTypeInfo.As.PROPERTY, // Adiciona uma propriedade no JSON
+        property = "@guiatipo"                // Nome da propriedade no JSON
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = DARF.class, name = "DetalhamentoGuia"),
+        @JsonSubTypes.Type(value = FGTS.class, name = "FGTS")
+})
 public abstract class Guia {
 
     //o id vai ter que vir pelas classes filhas, por isso a atribuição direta sem validação com o bloco static
     //como essa classe é apenas para atribuição, não haverá a necessidade de uma GuiaController!
-    public Guia(int id, String CNPJ_Empresa, UUID identificador, LocalDate dataVencimento, double valorTotal, YearMonth competencia, LinkPagamento link, GuiaTypes type) {
+
+    @JsonCreator
+    public Guia(
+           @JsonProperty("id") int id,
+           @JsonProperty("cnpj_empresa") String CNPJ_Empresa,
+           @JsonProperty("identificador") UUID identificador,
+           @JsonProperty("datavencimento") LocalDate dataVencimento,
+           @JsonProperty("valortotal") double valorTotal,
+           @JsonProperty("competencia") YearMonth competencia,
+           @JsonProperty("link") LinkPagamento link,
+           @JsonProperty("type") GuiaTypes type) {
         Id = ++id;
         this.CNPJ_Empresa = CNPJ_Empresa;
         this.identificador = identificador;
@@ -24,14 +46,21 @@ public abstract class Guia {
         this.link = link;
         this.tipo = type;
     }
-
+    @JsonProperty("id")
     private final int Id;
+    @JsonProperty("cnpj_empresa")
     private final String CNPJ_Empresa;
+    @JsonProperty("identificador")
     private final UUID identificador;
+    @JsonProperty("datavencimento")
     private final LocalDate dataVencimento;
+    @JsonProperty("valortotal")
     private final double valorTotal;
+    @JsonProperty("competencia")
     private final YearMonth competencia;
+    @JsonProperty("link")
     private final LinkPagamento link;
+    @JsonProperty("tipo")
     private final GuiaTypes tipo;
 
     public int getId() {
