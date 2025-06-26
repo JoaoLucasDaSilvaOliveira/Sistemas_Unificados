@@ -8,6 +8,7 @@
     "competencia" : "07/25",
     "link" : "QRCODE",
     "tipo" : "FGTS",
+    "StPg" : "PENDENTE",
     "valoresPorFuncionario" : {
       "048.511.110-10" : 159.90,
       "111.111.111-10" : 233.12,
@@ -30,6 +31,7 @@
     "valorTotal" : 500.00,
     "competencia" : "07/25",
     "link" : "COD_BARRAS",
-    "tipo" : "DARF"
+    "tipo" : "DARF",
+    "StPg" : "PENDENTE"
   }
 ]

@@ -3,6 +3,7 @@ package Model;
 import DAO.EmpresaDAO;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import Model.ENUMS.StatusPagamento;
 
 import java.time.*;
 import java.util.Date;
@@ -14,15 +15,18 @@ public abstract class Guia {
 
     //o id vai ter que vir pelas classes filhas, por isso a atribuição direta sem validação com o bloco static
     //como essa classe é apenas para atribuição, não haverá a necessidade de uma GuiaController!
-    public Guia(int id, String CNPJ_Empresa, UUID identificador, LocalDate dataVencimento, double valorTotal, YearMonth competencia, LinkPagamento link, GuiaTypes type) {
-        Id = ++id;
+
+
+    public Guia(int id, String CNPJ_Empresa, UUID identificador, LocalDate dataVencimento, double valorTotal, YearMonth competencia, LinkPagamento link, GuiaTypes tipo, StatusPagamento stPg) {
+        Id = id;
         this.CNPJ_Empresa = CNPJ_Empresa;
         this.identificador = identificador;
         this.dataVencimento = dataVencimento;
         this.valorTotal = valorTotal;
         this.competencia = competencia;
         this.link = link;
-        this.tipo = type;
+        this.tipo = tipo;
+        StPg = stPg;
     }
 
     private final int Id;
@@ -33,6 +37,7 @@ public abstract class Guia {
     private final YearMonth competencia;
     private final LinkPagamento link;
     private final GuiaTypes tipo;
+    private final StatusPagamento StPg;
 
     public int getId() {
         return Id;
