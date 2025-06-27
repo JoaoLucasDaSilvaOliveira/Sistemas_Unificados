@@ -11,16 +11,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.UUID;
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,      // Usa o nome da subclasse
-        include = JsonTypeInfo.As.PROPERTY, // Adiciona uma propriedade no JSON
-        property = "@detalhamentoguiatipo" // Nome da propriedade no JSON
-)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = DAE.class, name = "DAE"),
-        @JsonSubTypes.Type(value = DARF.class, name = "DARF")
-})
-public class DetalhamentoGuia extends Guia{
+public abstract class DetalhamentoGuia extends Guia{
 
     @JsonCreator
     public DetalhamentoGuia(

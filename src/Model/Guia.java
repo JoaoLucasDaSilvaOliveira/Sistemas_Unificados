@@ -13,14 +13,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,      // Usa o nome da subclasse
-        include = JsonTypeInfo.As.PROPERTY, // Adiciona uma propriedade no JSON
-        property = "@guiatipo"                // Nome da propriedade no JSON
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = DARF.class, name = "DetalhamentoGuia"),
-        @JsonSubTypes.Type(value = FGTS.class, name = "FGTS")
+        @JsonSubTypes.Type(value = FGTS.class, name = "FGTS"),
+        @JsonSubTypes.Type(value = DAE.class, name = "DAE"),
+        @JsonSubTypes.Type(value = DARF.class, name = "DARF")
 })
 public abstract class Guia {
 

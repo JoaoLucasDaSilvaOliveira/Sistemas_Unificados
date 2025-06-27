@@ -1,42 +1,78 @@
 package DAO;
 
+import Model.ENUMS.GuiaTypes;
+import Model.Guia;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
-public class GuiaDAO implements OperacoesDAO{
-    @Override
-    public boolean create(Object creating) {
-        return false;
+public class GuiaDAO {
+
+    private static final String DIRECTORY_PATH = "data";
+    private static final String FILE_NAME = "guias.json";
+    private static final Path PATH = Paths.get(DIRECTORY_PATH, FILE_NAME);
+
+    public GuiaDAO() throws IOException {
+        if (!Files.exists(PATH)) {
+            throw new FileNotFoundException("Arquivo não encontrado!");
+        }
     }
 
-    @Override
-    public List searchAll() {
-        return List.of();
+    public List<Guia> searchAll() {
+        if (Files.notExists(PATH)) {
+            System.out.println("Arquivo não encontrado. Retornando lista vazia.");
+            return new ArrayList<>();
+        }
+
+        try {
+            if (Files.size(PATH) == 0) {
+                return new ArrayList<>();
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+            List<Guia> guias = mapper.readValue(
+                    PATH.toFile(),
+                    new TypeReference<List<Guia>>() {}
+            );
+
+            return guias;
+
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
-    @Override
-    public Object searchByKey(Object searching) {
-        return null;
+    public List<Guia> searchByValue(YearMonth searching) {
+        List<Guia> guias = searchAll();
+        List<Guia> guiasDaCompetencia = new ArrayList<>();
+        for (Guia guia : guias) {
+            if (guia.getCompetencia().equals(searching)) {
+                guiasDaCompetencia.add(guia);
+            }
+        }
+        return guiasDaCompetencia;
     }
 
-    @Override
-    public Object searchByValue(Object searching) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Object deleting) {
-        return false;
-    }
-
-    @Override
     public boolean update(Object updating) {
         return false;
     }
 
-    @Override
-    public boolean saveList(List savingList) {
-        return false;
-    }
     /*
         quando for implementar algo que receba as informações do json de guias e for retornar o obj guia
         fazer assim para data de vencimento:
@@ -44,15 +80,5 @@ public class GuiaDAO implements OperacoesDAO{
         e assim para data de competencia:
         YearMonth competenciaFodase = LocalDate.parse(OutraDataQveioDoJson, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     */
-    //a criação de objeto vai ter q ser aqui, chama o new Guia() aqui;
-    //na hora de fazer a criação vai ter que verificar qual o tipo da guia, infelizmente!
-    //IDEIA: switch (tipo) {
-    //            case "FGTS":
-    //                guia = new ...();
-    //                break;
-    //            case "INSS":
-    //                guia = new ...();
-    //                break;
-    //            ...
-    //        }
+
 }
