@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "CNPJ_Empresa" : "02.739.876/0001-76",
+    "identificador" : "1768a9a0-b285-4dd4-b621-31b1a201422c",
+    "dataVencimento" : "20/08/25",
+    "valorTotal" : 3500.00,
+    "competencia" : "07/25",
+    "link" : "QRCODE",
+    "tipo" : "FGTS",
+    "valoresPorFuncionario" : {
+      "048.511.110-10" : 159.90,
+      "111.111.111-10" : 233.12,
+      "123.456.789-10" : 98.50
+    },
+    "funcionariosDaGuia" : {
+      "048.511.110-10" : "João Lucas da Silva Oliveira",
+      "111.111.111-10" : "Pedro Yago Prestes",
+      "123.456.789-10" : "Henrique Marino Cetim"
+    },
+    "eConsignado" : {
+      "048.511.110-10" : 650.00
+    }
+  },
+  {
+    "id": 2,
+    "CNPJ_Empresa" : "03.739.876/0001-76",
+    "identificador" : "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "dataVencimento" : "20/08/25",
+    "valorTotal" : 500.00,
+    "competencia" : "07/25",
+    "link" : "COD_BARRAS",
+    "tipo" : "DARF"
+  }
+]

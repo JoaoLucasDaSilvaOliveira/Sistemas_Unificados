@@ -12,9 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
 
@@ -89,9 +87,15 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
 
     @Override
     public Usuario searchByValue(String searching) {
-        List<Usuario> usuarios = searchAll();
-
-        return usuarios.stream().filter(e -> e.getName().equalsIgnoreCase(searching)).findFirst().orElse(null);
+        List<Usuario> users = searchAll();
+        if (!users.isEmpty()) {
+            for (Usuario usuario : users) {
+                if (usuario.getSenha().equals(searching) || usuario.getEmail().equals(searching) || usuario.getName().equals(searching)) {
+                    return usuario;
+                }
+            }
+        }
+        return null;
     }
 
     @Override

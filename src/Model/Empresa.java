@@ -43,7 +43,6 @@ public class Empresa {
         //TODO: fazer as verificações aqui e lançar os erros se necessário
         EmpresaController control = new EmpresaController();
         return control.validateAndCreate(new Empresa(CNPJ, name, status));
-
     }
 
     @JsonProperty("cnpj") // Mapeia para "cnpj" no JSON

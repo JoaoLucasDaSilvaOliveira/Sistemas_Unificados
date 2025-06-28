@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.Empresa;
+import Model.Guia;
+import Model.Usuario;
 import Utils.FileUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,12 +15,11 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
+public class EmpresaDAO implements OperacoesDAO<Empresa, String, Object> {
 
     private static final String DIRECTORY_PATH = "data";
     private static final String FILE_NAME = "empresas.json";
     private static final Path PATH = Paths.get(DIRECTORY_PATH, FILE_NAME);
-
     public EmpresaDAO() {
 
         try {
@@ -79,8 +80,17 @@ public class EmpresaDAO implements OperacoesDAO<Empresa, String, String> {
 
 
     @Override
-    public Empresa searchByValue(String searching) {
-        return searchAll().stream().filter(e -> e.getName().equalsIgnoreCase(searching)).findFirst().orElse(null);
+    public Empresa searchByValue(Object searching) {
+
+        List<Empresa> empresas = searchAll();
+        if (!empresas.isEmpty()) {
+            for (Empresa empresa : empresas) {
+                if (empresa.getName().equals(searching) || empresa.getCNPJ().equals(searching) || empresa.getCodDono() == (Integer) searching) {
+                    return empresa;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
