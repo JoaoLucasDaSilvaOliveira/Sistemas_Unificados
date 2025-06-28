@@ -1,6 +1,8 @@
 package Model;
 
-public interface Login {
-    public boolean toLogin(String email, String password);
+import Model.EXEPTIONS.NoSuchArgument;
+
+public interface Login <T>{
+    public T toLogin(String email, String password) throws NoSuchArgument;
     public boolean recuperatePassword (String email);
 }
