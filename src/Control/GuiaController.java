@@ -13,7 +13,7 @@ public class GuiaController implements OperacoesGuias <Guia>{
         if (competenciaDesejada == null) throw new NullPointerException("A data não pode ser nula");
         GuiaDAO g = new GuiaDAO();
         //retornar null caso não tenha encontrado a competência desejada
-        ArrayList<Guia> guias  = g.searchByValue (competenciaDesejada);
+        ArrayList<Guia> guias  = (ArrayList<Guia>) g.searchByValue (competenciaDesejada);
         if (guias == null) throw new NoSuchReference("A competência "+ competenciaDesejada.toString() + " não foi encontrada");
         for (Guia gu : guias){
             if (gu.getTipo().equals(tipo)){

@@ -13,21 +13,20 @@ public abstract class DetalhamentoGuia extends Guia{
     @JsonCreator
     public DetalhamentoGuia(
            @JsonProperty("id") int id,
-           @JsonProperty("cnpj_empresa") String CNPJ_Empresa,
+           @JsonProperty("CNPJ_Empresa") String CNPJ_Empresa,
            @JsonProperty("identificador") UUID identificador,
-           @JsonProperty("datavencimento") LocalDate dataVencimento,
-           @JsonProperty("valortotal") double valorTotal,
+           @JsonProperty("dataVencimento") LocalDate dataVencimento,
+           @JsonProperty("valorTotal") double valorTotal,
            @JsonProperty("competencia") YearMonth competencia,
            @JsonProperty("link") LinkPagamento link,
-           @JsonProperty("type") GuiaTypes type,
            @JsonProperty("observacoes") String observacoes,
-           @JsonProperty("codcomposicao") int codComposicao,
-           @JsonProperty("denominacaodacomposicao") String denominacaoDaComposicao,
-           @JsonProperty("valorprincipal") double valorPrincipal,
+           @JsonProperty("codComposicao") int codComposicao,
+           @JsonProperty("denominacaoDaComposicao") String denominacaoDaComposicao,
+           @JsonProperty("valorPrincipal") double valorPrincipal,
            @JsonProperty("multa") double multa,
            @JsonProperty("juros") double juros,
            @JsonProperty("StPg") StatusPagamento StPg){
-        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type, StPg);
+        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, StPg);
         this.observacoes = observacoes;
         this.codComposicao = codComposicao;
         this.denominacaoDaComposicao = denominacaoDaComposicao;
@@ -38,11 +37,11 @@ public abstract class DetalhamentoGuia extends Guia{
 
     @JsonProperty("observacoes")
     private final String observacoes;
-    @JsonProperty("codcomposicao")
+    @JsonProperty("codComposicao")
     private final int codComposicao;
-    @JsonProperty("denominacaodacomposicao")
+    @JsonProperty("denominacaoDaComposicao")
     private final String denominacaoDaComposicao;
-    @JsonProperty("valorprincipal")
+    @JsonProperty("valorPrincipal")
     private final double valorPrincipal;
     @JsonProperty("multa")
     private final double multa;
