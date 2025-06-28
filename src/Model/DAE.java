@@ -3,6 +3,7 @@ package Model;
 import Control.GuiaController;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import Model.ENUMS.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,7 +12,6 @@ import java.time.YearMonth;
 import java.util.UUID;
 
 public class DAE extends DetalhamentoGuia{
-
     @JsonCreator
     public DAE(
             @JsonProperty("id") int id,
@@ -27,9 +27,11 @@ public class DAE extends DetalhamentoGuia{
             @JsonProperty("denominacaodacomposicao") String denominacaoDaComposicao,
             @JsonProperty("valorprincipal") double valorPrincipal,
             @JsonProperty("multa") double multa,
-            @JsonProperty("juros") double juros) {
-        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type, observacoes, codComposicao, denominacaoDaComposicao, valorPrincipal, multa, juros);
+            @JsonProperty("juros") double juros,
+            @JsonProperty("StPg") StatusPagamento StPg) {
+        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type, observacoes, codComposicao, denominacaoDaComposicao, valorPrincipal, multa, juros, StPg);
     }
+
     public static DAE generate (YearMonth comp, GuiaTypes type) throws Exception{
         GuiaController g = new GuiaController();
         return (DAE) g.create(comp, type);

@@ -2,14 +2,12 @@ package Model;
 
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import Model.ENUMS.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.time.*;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,7 +21,6 @@ public abstract class Guia {
 
     //o id vai ter que vir pelas classes filhas, por isso a atribuição direta sem validação com o bloco static
     //como essa classe é apenas para atribuição, não haverá a necessidade de uma GuiaController!
-
     @JsonCreator
     public Guia(
            @JsonProperty("id") int id,
@@ -33,8 +30,9 @@ public abstract class Guia {
            @JsonProperty("valortotal") double valorTotal,
            @JsonProperty("competencia") YearMonth competencia,
            @JsonProperty("link") LinkPagamento link,
-           @JsonProperty("type") GuiaTypes type) {
-        Id = ++id;
+           @JsonProperty("type") GuiaTypes type,
+           @JsonProperty("StPg") StatusPagamento StPg) {
+        Id = id;
         this.CNPJ_Empresa = CNPJ_Empresa;
         this.identificador = identificador;
         this.dataVencimento = dataVencimento;
@@ -42,6 +40,7 @@ public abstract class Guia {
         this.competencia = competencia;
         this.link = link;
         this.tipo = type;
+        this.StPg = StPg;
     }
     @JsonProperty("id")
     private final int Id;
@@ -59,6 +58,8 @@ public abstract class Guia {
     private final LinkPagamento link;
     @JsonProperty("tipo")
     private final GuiaTypes tipo;
+    @JsonProperty("StPg")
+    private final StatusPagamento StPg;
 
     public int getId() {
         return Id;

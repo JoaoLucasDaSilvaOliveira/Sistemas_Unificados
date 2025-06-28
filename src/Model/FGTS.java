@@ -1,9 +1,9 @@
 package Model;
 
 import Control.GuiaController;
-import DAO.GuiaDAO;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import Model.ENUMS.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,22 +16,25 @@ public class FGTS extends Guia{
     //não usar normalmente!!! uso apenas da classe DAO
     @JsonCreator
     public FGTS(
-               @JsonProperty("id") int id,
-               @JsonProperty("cnpj_empresa") String CNPJ_Empresa,
-               @JsonProperty("identificador") UUID identificador,
-               @JsonProperty("datavencimento") LocalDate dataVencimento,
-               @JsonProperty("valortotal") double valorTotal,
-               @JsonProperty("competencia") YearMonth competencia,
-               @JsonProperty("link") LinkPagamento link,
-               @JsonProperty("type") GuiaTypes type,
-               @JsonProperty("econsignado") Map<String, Double> eConsignado,
-               @JsonProperty("funcionariosdaguia") Map<String, String> funcionariosDaGuia,
-               @JsonProperty("valoresporfuncionario") Map<String, Double> valoresPorFuncionario) {
-        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type);
+            @JsonProperty("id") int id,
+            @JsonProperty("cnpj_empresa") String CNPJ_Empresa,
+            @JsonProperty("identificador") UUID identificador,
+            @JsonProperty("datavencimento") LocalDate dataVencimento,
+            @JsonProperty("valortotal") double valorTotal,
+            @JsonProperty("competencia") YearMonth competencia,
+            @JsonProperty("link") LinkPagamento link,
+            @JsonProperty("type") GuiaTypes type,
+            @JsonProperty("econsignado") Map<String, Double> eConsignado,
+            @JsonProperty("funcionariosdaguia") Map<String, String> funcionariosDaGuia,
+            @JsonProperty("valoresporfuncionario") Map<String, Double> valoresPorFuncionario,
+            @JsonProperty("status") StatusPagamento status) {
+        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type, status);
         this.eConsignado = eConsignado;
         this.funcionariosDaGuia = funcionariosDaGuia;
         this.valoresPorFuncionario = valoresPorFuncionario;
     }
+
+
     public static FGTS generate (YearMonth comp, GuiaTypes type) throws Exception{
         GuiaController g = new GuiaController();
         return (FGTS) g.create(comp, type);

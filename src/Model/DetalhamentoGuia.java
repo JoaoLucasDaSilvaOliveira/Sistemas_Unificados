@@ -2,17 +2,14 @@ package Model;
 
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
+import Model.ENUMS.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.UUID;
 
 public abstract class DetalhamentoGuia extends Guia{
-
     @JsonCreator
     public DetalhamentoGuia(
            @JsonProperty("id") int id,
@@ -28,8 +25,9 @@ public abstract class DetalhamentoGuia extends Guia{
            @JsonProperty("denominacaodacomposicao") String denominacaoDaComposicao,
            @JsonProperty("valorprincipal") double valorPrincipal,
            @JsonProperty("multa") double multa,
-           @JsonProperty("juros") double juros) {
-        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type);
+           @JsonProperty("juros") double juros,
+           @JsonProperty("StPg") StatusPagamento StPg){
+        super(id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, type, StPg);
         this.observacoes = observacoes;
         this.codComposicao = codComposicao;
         this.denominacaoDaComposicao = denominacaoDaComposicao;
