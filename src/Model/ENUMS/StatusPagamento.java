@@ -15,4 +15,5 @@ public enum StatusPagamento {
     public String toString(){
         return this.texto;
     }
+
 }

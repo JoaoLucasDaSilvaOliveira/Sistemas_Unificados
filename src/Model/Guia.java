@@ -3,10 +3,8 @@ package Model;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
 import Model.ENUMS.StatusPagamento;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
+
 import java.time.*;
 import java.util.Objects;
 import java.util.UUID;
@@ -23,15 +21,14 @@ public abstract class Guia {
     //como essa classe é apenas para atribuição, não haverá a necessidade de uma GuiaController!
     @JsonCreator
     public Guia(
-           @JsonProperty("id") int id,
-           @JsonProperty("cnpj_empresa") String CNPJ_Empresa,
-           @JsonProperty("identificador") UUID identificador,
-           @JsonProperty("datavencimento") LocalDate dataVencimento,
-           @JsonProperty("valortotal") double valorTotal,
-           @JsonProperty("competencia") YearMonth competencia,
-           @JsonProperty("link") LinkPagamento link,
-           @JsonProperty("type") GuiaTypes type,
-           @JsonProperty("StPg") StatusPagamento StPg) {
+            @JsonProperty("id") int id,
+            @JsonProperty("CNPJ_Empresa") String CNPJ_Empresa,
+            @JsonProperty("identificador") UUID identificador,
+            @JsonProperty("dataVencimento") @JsonFormat(pattern = "dd/MM/yy") LocalDate dataVencimento,
+            @JsonProperty("valorTotal") double valorTotal,
+            @JsonProperty("competencia") YearMonth competencia,
+            @JsonProperty("link") LinkPagamento link,
+            @JsonProperty("StPg") StatusPagamento StPg) {
         Id = id;
         this.CNPJ_Empresa = CNPJ_Empresa;
         this.identificador = identificador;
@@ -39,25 +36,24 @@ public abstract class Guia {
         this.valorTotal = valorTotal;
         this.competencia = competencia;
         this.link = link;
-        this.tipo = type;
         this.StPg = StPg;
     }
     @JsonProperty("id")
     private final int Id;
-    @JsonProperty("cnpj_empresa")
+    @JsonProperty("CNPJ_Empresa")
     private final String CNPJ_Empresa;
     @JsonProperty("identificador")
     private final UUID identificador;
-    @JsonProperty("datavencimento")
+    @JsonProperty("dataVencimento")
+    @JsonFormat(pattern = "dd/MM/yy")
     private final LocalDate dataVencimento;
-    @JsonProperty("valortotal")
+    @JsonProperty("valorTotal")
     private final double valorTotal;
     @JsonProperty("competencia")
+    @JsonFormat(pattern = "MM/yy")
     private final YearMonth competencia;
     @JsonProperty("link")
     private final LinkPagamento link;
-    @JsonProperty("tipo")
-    private final GuiaTypes tipo;
     @JsonProperty("StPg")
     private final StatusPagamento StPg;
 
@@ -89,19 +85,17 @@ public abstract class Guia {
         return link;
     }
 
-    public GuiaTypes getTipo() {
-        return tipo;
-    }
+    public abstract String getTipo();
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Guia guia)) return false;
-        return Id == guia.Id && Double.compare(valorTotal, guia.valorTotal) == 0 && Objects.equals(CNPJ_Empresa, guia.CNPJ_Empresa) && Objects.equals(identificador, guia.identificador) && Objects.equals(dataVencimento, guia.dataVencimento) && Objects.equals(competencia, guia.competencia) && link == guia.link && tipo == guia.tipo;
+        return Id == guia.Id && Double.compare(valorTotal, guia.valorTotal) == 0 && Objects.equals(CNPJ_Empresa, guia.CNPJ_Empresa) && Objects.equals(identificador, guia.identificador) && Objects.equals(dataVencimento, guia.dataVencimento) && Objects.equals(competencia, guia.competencia) && link == guia.link;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, tipo);
+        return Objects.hash(Id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link);
     }
 
     @Override
@@ -114,7 +108,8 @@ public abstract class Guia {
                 ", valorTotal=" + valorTotal +
                 ", competencia=" + competencia +
                 ", link=" + link +
-                ", tipo=" + tipo +
+                ", tipo=" + getTipo() +
+                ", StPg=" + StPg +
                 '}';
     }
 }
