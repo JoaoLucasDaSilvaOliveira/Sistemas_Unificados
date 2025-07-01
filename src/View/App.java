@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
     }
     private static void menu (){
         var scanf = new Scanner(System.in);
@@ -42,5 +42,5 @@ public class App {
         } catch (NoSuchArgument e){
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 }
