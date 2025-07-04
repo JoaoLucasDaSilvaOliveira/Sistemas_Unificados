@@ -12,8 +12,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Classe que representa uma empresa no sistema.
+ * Contém informações como CNPJ, nome, status e identificador único.
+ */
 public class Empresa {
 
+    /**
+     * Bloco de inicialização estático.
+     * Inicializa o contador de IDs baseado nas empresas existentes no banco de dados.
+     */
     static {
         EmpresaDAO e = new EmpresaDAO();
         List<Empresa> empresas = e.searchAll();
@@ -27,6 +35,14 @@ public class Empresa {
     }
 
     // Construtor com anotações para o Jackson
+
+    /**
+     * Construtor privado da classe Empresa.
+     *
+     * @param CNPJ   O CNPJ da empresa no formato XX.XXX.XXX/XXXX-XX
+     * @param name   O nome da empresa
+     * @param status O status atual da empresa (ACTIVE ou INACTIVE)
+     */
     @JsonCreator
     private Empresa(
             @JsonProperty("cnpj") String CNPJ, // O JSON contém "cnpj", que será mapeado para o campo "CNPJ"
@@ -39,6 +55,16 @@ public class Empresa {
         this.ID = ++currentID;
     }
 
+    /**
+     * Cria uma nova instância de Empresa com os parâmetros fornecidos.
+     *
+     * @param CNPJ   O CNPJ da empresa
+     * @param name   O nome da empresa
+     * @param status O status da empresa
+     * @return Uma nova instância de Empresa
+     * @throws InvalidFormatException Quando o formato dos dados é inválido
+     * @throws ExistingInstance       Quando já existe uma empresa com os mesmos dados
+     */
     public static Empresa create (String CNPJ, String name, Status status) throws InvalidFormatException, ExistingInstance {
         //TODO: fazer as verificações aqui e lançar os erros se necessário
         EmpresaController control = new EmpresaController();
@@ -56,10 +82,20 @@ public class Empresa {
     private static int currentID;
     private int codDono;
 
+    /**
+     * Retorna o código do proprietário da empresa.
+     *
+     * @return O código do proprietário
+     */
     public int getCodDono() {
         return codDono;
     }
 
+    /**
+     * Define o código do proprietário da empresa.
+     *
+     * @param codDono O novo código do proprietário
+     */
     public void setCodDono(int codDono) {
         this.codDono = codDono;
     }
@@ -69,6 +105,12 @@ public class Empresa {
         INACTIVE
     }
 
+    /**
+     * Gera um novo ID para a empresa.
+     *
+     * @param empresa A empresa para qual o ID será gerado
+     * @return O novo ID gerado
+     */
     private int IdGenerate(Empresa empresa) {
         EmpresaDAO empDAO = new EmpresaDAO();
         List<Empresa> empresas = empDAO.searchAll();

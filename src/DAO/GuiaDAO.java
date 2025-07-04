@@ -14,22 +14,41 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
+/**
+ * Classe responsável pela leitura e consulta de objetos {@link Guia} em arquivo JSON.
+ * O arquivo é armazenado em {@code data/guias.json}.
+ *
+ * Essa DAO não implementa uma interface genérica, pois possui buscas específicas por competência e CNPJ.
+ */
 public class GuiaDAO {
 
+    /** Caminho do diretório onde o arquivo de guias está localizado. */
     private static final String DIRECTORY_PATH = "data";
+
+    /** Nome do arquivo JSON. */
     private static final String FILE_NAME = "guias.json";
+
+    /** Caminho completo do arquivo de guias. */
     private static final Path PATH = Paths.get(DIRECTORY_PATH, FILE_NAME);
 
+    /**
+     * Construtor que garante a existência do arquivo {@code guias.json}.
+     *
+     * @throws IOException se o arquivo não for encontrado.
+     */
     public GuiaDAO() throws IOException {
         if (!Files.exists(PATH)) {
             throw new FileNotFoundException("Arquivo não encontrado!");
         }
     }
 
+    /**
+     * Lê todos os objetos {@link Guia} armazenados no arquivo.
+     *
+     * @return lista de guias encontradas ou lista vazia caso ocorra erro ou arquivo esteja vazio/inexistente.
+     */
     public List<Guia> searchAll() {
         if (Files.notExists(PATH)) {
             System.out.println("Arquivo não encontrado. Retornando lista vazia.");
@@ -45,12 +64,10 @@ public class GuiaDAO {
             mapper.registerModule(new JavaTimeModule());
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-            List<Guia> guias = mapper.readValue(
+            return mapper.readValue(
                     PATH.toFile(),
                     new TypeReference<List<Guia>>() {}
             );
-
-            return guias;
 
         } catch (IOException e) {
             System.err.println("Erro ao ler o arquivo: " + e.getMessage());
@@ -58,6 +75,12 @@ public class GuiaDAO {
         }
     }
 
+    /**
+     * Busca todas as guias de uma determinada competência.
+     *
+     * @param searching competência no formato {@link YearMonth}.
+     * @return lista de guias daquela competência ou lista vazia.
+     */
     public List<Guia> searchByValue(YearMonth searching) {
         List<Guia> guias = searchAll();
         List<Guia> guiasDaCompetencia = new ArrayList<>();
@@ -69,28 +92,38 @@ public class GuiaDAO {
         return guiasDaCompetencia;
     }
 
+    /**
+     * Busca todas as guias associadas a um CNPJ específico.
+     *
+     * @param searching CNPJ da empresa.
+     * @return lista de guias encontradas ou vazia.
+     */
     public List<Guia> searchByValue(String searching) {
         List<Guia> guias = searchAll();
-        List<Guia> guiasDaCompetencia = new ArrayList<>();
+        List<Guia> guiasDaEmpresa = new ArrayList<>();
         for (Guia guia : guias) {
             if (guia.getCNPJ_Empresa().equals(searching)) {
-                guiasDaCompetencia.add(guia);
+                guiasDaEmpresa.add(guia);
             }
         }
-        //retorna uma lista vazia caso n ache nada
-        return guiasDaCompetencia;
+        return guiasDaEmpresa;
     }
 
+    /**
+     * Método de atualização ainda não implementado.
+     *
+     * @param updating objeto a ser atualizado.
+     * @return sempre retorna {@code false}.
+     */
     public boolean update(Object updating) {
         return false;
     }
 
     /*
-        quando for implementar algo que receba as informações do json de guias e for retornar o obj guia
-        fazer assim para data de vencimento:
-        LocalDate dataFodase = LocalDate.parse(dataQveioDoJson, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        e assim para data de competencia:
-        YearMonth competenciaFodase = LocalDate.parse(OutraDataQveioDoJson, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    */
-
+     * NOTA:
+     * Para converter datas de String para objetos:
+     *
+     * LocalDate data = LocalDate.parse(dataDoJson, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+     * YearMonth competencia = YearMonth.parse(dataDoJson, DateTimeFormatter.ofPattern("MM/yyyy"));
+     */
 }

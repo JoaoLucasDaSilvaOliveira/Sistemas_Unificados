@@ -16,7 +16,7 @@ import java.util.Scanner;
 public record LoginImpl(String email, String pass) implements Login<UserApp> {
 
     @Override
-    public UserApp toLogin(String email, String password) throws NoSuchArgument {
+    public UserApp toLogin(String email, String password) throws NoSuchArgument, WrongPass {
         Usuario user = new UsuarioDAO().searchByValue(email);
         if (user ==  null) {
             throw new NoSuchArgument("Email não encontrado!");
@@ -105,7 +105,7 @@ public record LoginImpl(String email, String pass) implements Login<UserApp> {
             System.out.println("\n\nCadastro efetuado com sucesso!");
             UserApp userApp = new LoginImpl(email, senha).toLogin(email, senha);
             LoginImpl.telaPrincipal(userApp, scan);
-        } catch (ExistingInstance  | InvalidFormatException e) {
+        } catch (ExistingInstance  | InvalidFormatException | WrongPass e) {
             System.out.println(e.getMessage());
             System.out.println("Cadastro cancelado!");
         } catch (NoSuchArgument e) {

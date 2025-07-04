@@ -14,22 +14,31 @@ import java.nio.file.Paths;
 
 import java.util.*;
 
+/**
+ * DAO responsável pela persistência dos objetos {@link Usuario}.
+ * Os dados são armazenados em arquivo JSON no caminho "data/usuarios.json".
+ * Implementa as operações CRUD da interface {@link OperacoesDAO}.
+ */
 public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
 
+    /** Diretório onde o arquivo JSON está armazenado. */
     private static final String DIRECTORY_PATH = "data";
+
+    /** Nome do arquivo JSON que contém os usuários. */
     private static final String FILE_NAME = "usuarios.json";
+
+    /** Caminho completo do arquivo JSON. */
     private static final Path PATH = Paths.get(DIRECTORY_PATH, FILE_NAME);
 
+    /**
+     * Construtor que cria o diretório e o arquivo JSON caso não existam.
+     */
     public UsuarioDAO() {
-
         try {
-            // Cria o diretório caso não exista
             if (!Files.exists(PATH.getParent())) {
                 Files.createDirectory(PATH.getParent());
                 System.out.println("Diretório criado em: " + PATH.getParent());
             }
-
-            // Cria o arquivo JSON caso não exista
             if (!Files.exists(PATH)) {
                 Files.createFile(PATH);
                 System.out.println("Arquivo criado em: " + PATH);
@@ -39,14 +48,24 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
         }
     }
 
+    /**
+     * Adiciona um novo {@link Usuario} ao arquivo.
+     *
+     * @param usuario usuário a ser criado.
+     * @return {@code true} se a criação foi bem-sucedida, {@code false} caso contrário.
+     */
     @Override
     public boolean create(Usuario usuario) {
-        List<Usuario> usuarios = searchAll(); // Lista atual de empresa
-        usuarios.add(usuario); // Adiciona a nova empresa;
-
-        return saveList(usuarios); // Salva a lista atualizada no arquivo
+        List<Usuario> usuarios = searchAll();
+        usuarios.add(usuario);
+        return saveList(usuarios);
     }
 
+    /**
+     * Retorna a lista de todos os usuários armazenados.
+     *
+     * @return lista de usuários, ou lista vazia se arquivo não existir ou estiver vazio.
+     */
     @Override
     public List<Usuario> searchAll() {
         if (FileUtils.fileNotFound(PATH)) {
@@ -55,7 +74,7 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
         }
 
         try {
-            if (FileUtils.fileIsEmpty(PATH)) { // <-- Verifica se o arquivo está vazio
+            if (FileUtils.fileIsEmpty(PATH)) {
                 return new ArrayList<>();
             }
         } catch (IOException e) {
@@ -72,19 +91,27 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
         }
     }
 
+    /**
+     * Busca um usuário pelo seu ID.
+     *
+     * @param searching ID do usuário.
+     * @return usuário encontrado, ou {@code null} se não existir.
+     */
     @Override
     public Usuario searchByKey(Integer searching) {
-        // Recupera a lista de todos os usuários
         List<Usuario> usuarios = searchAll();
-
-        // Procura o usuário cujo ID corresponda à chave fornecida
         return usuarios.stream()
                 .filter(usuario -> Objects.equals(usuario.getID(), searching))
                 .findFirst()
-                .orElse(null); // Retorna null caso nenhum usuário seja encontrado
+                .orElse(null);
     }
 
-
+    /**
+     * Busca um usuário pelo valor de senha, email ou nome.
+     *
+     * @param searching valor a ser buscado.
+     * @return usuário encontrado, ou {@code null} se não existir.
+     */
     @Override
     public Usuario searchByValue(String searching) {
         List<Usuario> users = searchAll();
@@ -98,18 +125,28 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
         return null;
     }
 
+    /**
+     * Remove um usuário do arquivo.
+     *
+     * @param deleting usuário a ser removido.
+     * @return {@code true} se a remoção foi bem-sucedida, {@code false} caso contrário.
+     */
     @Override
     public boolean delete(Usuario deleting) {
         List<Usuario> usuarios = searchAll();
         usuarios.remove(deleting);
-
         return saveList(usuarios);
     }
 
+    /**
+     * Atualiza um usuário existente com novos dados.
+     *
+     * @param updating usuário com dados atualizados.
+     * @return {@code true} se a atualização foi bem-sucedida, {@code false} caso contrário.
+     */
     @Override
     public boolean update(Usuario updating) {
         List<Usuario> usuarios = searchAll();
-
         for (Usuario u : usuarios) {
             if (u.getID() == updating.getID()) {
                 u.setName(updating.getName());
@@ -122,6 +159,12 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
         return false;
     }
 
+    /**
+     * Salva a lista completa de usuários no arquivo JSON.
+     *
+     * @param savingList lista de usuários a ser salva.
+     * @return {@code true} se o salvamento foi bem-sucedido, {@code false} caso contrário.
+     */
     @Override
     public boolean saveList(List<Usuario> savingList) {
         ObjectMapper mapper = new ObjectMapper();
@@ -133,5 +176,4 @@ public class UsuarioDAO implements OperacoesDAO<Usuario, Integer, String> {
             return false;
         }
     }
-
 }
