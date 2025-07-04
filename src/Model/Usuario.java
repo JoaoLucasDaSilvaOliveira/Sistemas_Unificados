@@ -114,17 +114,16 @@ public class Usuario {
         return ID;
     }
 
-    public boolean redefinirSenha (String email, String newPassoword){
-        if (email == null) throw new NullPointerException("O email não pode ser nulo amigo!");
-        UsuarioDAO u = new UsuarioDAO();
-        List<Usuario> searching = u.searchAll();
-        for (Usuario us : searching){
-            if (us.getEmail().matches(email)){
-                us.setSenha(newPassoword);
-                return true;
-            }
+    public static void recuperatePassword(String email, String newPass) {
+        Usuario userTemp = new UsuarioDAO().searchByValue(email);
+        if (userTemp == null){
+            System.out.println("Email não cadastrado!");
+        } else{
+            userTemp.setSenha(newPass);
+            UsuarioDAO u = new UsuarioDAO();
+            u.update(userTemp);
+            System.out.println("Senha alterada com sucesso!");
         }
-        return false;
     }
 
     public boolean redefinirEmail (String name, String password, String newEmail){

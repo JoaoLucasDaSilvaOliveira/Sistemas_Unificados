@@ -69,6 +69,18 @@ public class GuiaDAO {
         return guiasDaCompetencia;
     }
 
+    public List<Guia> searchByValue(String searching) {
+        List<Guia> guias = searchAll();
+        List<Guia> guiasDaCompetencia = new ArrayList<>();
+        for (Guia guia : guias) {
+            if (guia.getCNPJ_Empresa().equals(searching)) {
+                guiasDaCompetencia.add(guia);
+            }
+        }
+        //retorna uma lista vazia caso n ache nada
+        return guiasDaCompetencia;
+    }
+
     public boolean update(Object updating) {
         return false;
     }

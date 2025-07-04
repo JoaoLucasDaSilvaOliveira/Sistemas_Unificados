@@ -10,6 +10,17 @@ import java.time.YearMonth;
 import java.util.UUID;
 
 public abstract class DetalhamentoGuia extends Guia{
+    @Override
+    public String toString() {
+        return super.toString()+
+                "\nObservacoes: " + observacoes + '\'' +
+                "\nCódigo da composição: " + codComposicao +
+                "\nDenominação da composição: " + denominacaoDaComposicao + '\'' +
+                "\nValor principal: " + valorPrincipal +
+                "\nMulta: " + multa +
+                "\nJuros: " + juros;
+    }
+
     @JsonCreator
     public DetalhamentoGuia(
            @JsonProperty("id") int id,

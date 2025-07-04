@@ -1,11 +1,14 @@
 package Model;
 
+import DAO.GuiaDAO;
 import Model.ENUMS.GuiaTypes;
 import Model.ENUMS.LinkPagamento;
 import Model.ENUMS.StatusPagamento;
 import com.fasterxml.jackson.annotation.*;
 
+import java.io.IOException;
 import java.time.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -98,18 +101,21 @@ public abstract class Guia {
         return Objects.hash(Id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link);
     }
 
+    public static List<Guia> listarGuias (String CNPJ) throws IOException {
+        return new GuiaDAO().searchByValue(CNPJ);
+    }
+
     @Override
     public String toString() {
-        return "Guia{" +
-                "Id=" + Id +
-                ", CNPJ_Empresa='" + CNPJ_Empresa + '\'' +
-                ", identificador=" + identificador +
-                ", dataVencimento=" + dataVencimento +
-                ", valorTotal=" + valorTotal +
-                ", competencia=" + competencia +
-                ", link=" + link +
-                ", tipo=" + getTipo() +
-                ", StPg=" + StPg +
-                '}';
+        return
+                "Id: " + Id +
+                "\nCNPJ: '" + CNPJ_Empresa + '\'' +
+                "\nIdentificador: " + identificador +
+                "\nData de vencimento: " + dataVencimento +
+                "\nValor total: " + valorTotal +
+                "\nCompetência: " + competencia +
+                "\nLink: " + link +
+                "\nTipo: " + getTipo() +
+                "\nSituação: " + StPg;
     }
 }

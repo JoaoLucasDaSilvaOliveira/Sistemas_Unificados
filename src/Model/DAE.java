@@ -13,6 +13,7 @@ import java.time.YearMonth;
 import java.util.UUID;
 
 public class DAE extends DetalhamentoGuia{
+
     @JsonCreator
     public DAE(
             @JsonProperty("id") int id,
@@ -40,5 +41,10 @@ public class DAE extends DetalhamentoGuia{
     @Override
     public String getTipo() {
         return "DAE";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

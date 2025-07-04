@@ -40,4 +40,9 @@ public class DARF extends DetalhamentoGuia{
     public String getTipo() {
         return "DARF";
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

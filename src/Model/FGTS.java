@@ -60,4 +60,12 @@ public class FGTS extends Guia{
     public String getTipo() {
         return "FGTS";
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                "\nValores por funcionário: " + valoresPorFuncionario +
+                "\nFuncionários da guia: " + funcionariosDaGuia +
+                "\neConsignado: " + eConsignado;
+    }
 }
