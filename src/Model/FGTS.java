@@ -107,4 +107,16 @@ public class FGTS extends Guia {
                 "\nFuncionários da guia: " + funcionariosDaGuia +
                 "\neConsignado: " + eConsignado;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof FGTS fgts)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(valoresPorFuncionario, fgts.valoresPorFuncionario) && Objects.equals(funcionariosDaGuia, fgts.funcionariosDaGuia) && Objects.equals(eConsignado, fgts.eConsignado);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), valoresPorFuncionario, funcionariosDaGuia, eConsignado);
+    }
 }

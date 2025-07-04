@@ -159,32 +159,6 @@ public abstract class Guia {
     public abstract String getTipo();
 
     /**
-     * Compara duas guias com base em seus atributos principais.
-     * @param o objeto a ser comparado.
-     * @return {@code true} se forem considerados iguais.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Guia guia)) return false;
-        return Id == guia.Id &&
-                Double.compare(valorTotal, guia.valorTotal) == 0 &&
-                Objects.equals(CNPJ_Empresa, guia.CNPJ_Empresa) &&
-                Objects.equals(identificador, guia.identificador) &&
-                Objects.equals(dataVencimento, guia.dataVencimento) &&
-                Objects.equals(competencia, guia.competencia) &&
-                link == guia.link;
-    }
-
-    /**
-     * Gera um hashCode baseado nos atributos da guia.
-     * @return valor hash.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(Id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link);
-    }
-
-    /**
      * Retorna uma lista de guias associadas a um determinado CNPJ, usando a {@link GuiaDAO}.
      *
      * @param CNPJ CNPJ da empresa.
@@ -211,5 +185,16 @@ public abstract class Guia {
                         "\nLink: " + link +
                         "\nTipo: " + getTipo() +
                         "\nSituação: " + StPg;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Guia guia)) return false;
+        return Id == guia.Id && Double.compare(valorTotal, guia.valorTotal) == 0 && Objects.equals(CNPJ_Empresa, guia.CNPJ_Empresa) && Objects.equals(identificador, guia.identificador) && Objects.equals(dataVencimento, guia.dataVencimento) && Objects.equals(competencia, guia.competencia) && link == guia.link && StPg == guia.StPg;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, CNPJ_Empresa, identificador, dataVencimento, valorTotal, competencia, link, StPg);
     }
 }

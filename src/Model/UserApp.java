@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 /**
  * Representa um usuário autenticado no aplicativo, contendo suas credenciais,
  * dados pessoais e informações da empresa associada.
@@ -64,11 +66,30 @@ public class UserApp {
 
     /**
      * Retorna a senha do usuário.
-     * ⚠️ **Atenção:** armazenar senhas em texto puro pode ser um risco de segurança.
-     *
      * @return senha.
      */
     public String getPass() {
         return pass;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof UserApp userApp)) return false;
+        return Objects.equals(e, userApp.e) && Objects.equals(u, userApp.u) && Objects.equals(email, userApp.email) && Objects.equals(pass, userApp.pass);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(e, u, email, pass);
+    }
+
+    @Override
+    public String toString() {
+        return "UserApp{" +
+                "e=" + e +
+                ", u=" + u +
+                ", email='" + email + '\'' +
+                ", pass='" + pass + '\'' +
+                '}';
     }
 }

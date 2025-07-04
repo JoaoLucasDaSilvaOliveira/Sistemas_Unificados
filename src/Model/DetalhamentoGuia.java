@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -100,5 +101,17 @@ public abstract class DetalhamentoGuia extends Guia {
                 "\nValor principal: " + valorPrincipal +
                 "\nMulta: " + multa +
                 "\nJuros: " + juros;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DetalhamentoGuia that)) return false;
+        if (!super.equals(o)) return false;
+        return codComposicao == that.codComposicao && Double.compare(valorPrincipal, that.valorPrincipal) == 0 && Double.compare(multa, that.multa) == 0 && Double.compare(juros, that.juros) == 0 && Objects.equals(observacoes, that.observacoes) && Objects.equals(denominacaoDaComposicao, that.denominacaoDaComposicao);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), observacoes, codComposicao, denominacaoDaComposicao, valorPrincipal, multa, juros);
     }
 }
